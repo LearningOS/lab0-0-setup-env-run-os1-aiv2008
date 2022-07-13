@@ -7,8 +7,7 @@ KERNEL_BIN := $(KERNEL_ELF).bin
 # BOARD
 BOARD ?= qemu
 SBI ?= rustsbi
-#BOOTLOADER := ../bootloader/$(SBI)-$(BOARD).bin
-BOOTLOADER := ~/rust/lab0-0-setup-env-run-os1-aiv2008/bootloader/$(SBI)-$(BOARD).bin
+BOOTLOADER := ../bootloader/$(SBI)-$(BOARD).bin
 
 # KERNEL ENTRY
 KERNEL_ENTRY_PA := 0x80200000

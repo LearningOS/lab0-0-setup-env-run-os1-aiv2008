@@ -1,24 +1,17 @@
-/*！
-
-本模块实现了 print 和 println 宏。
-
-*/
-
-use crate::sbi::console_putchar;
-use core::fmt::{self, Write};
+use core::fmt;
+use core::fmt::Write;
+use crate::sys_write;
 
 struct Stdout;
 
 impl Write for Stdout {
-    fn write_str(&mut self, s: &str) -> fmt::Result {
-        for c in s.chars() {
-            console_putchar(c as usize);
-        }
+    fn write_str(&mut self, s: &str)-> fmt::Result {
+        sys_write(1, s.as_bytes()); 
         Ok(())
     }
 }
 
-pub fn print(args: fmt::Arguments) {
+pub fn print(args: fmt::Arguments){
     Stdout.write_fmt(args).unwrap();
 }
 
@@ -32,6 +25,6 @@ macro_rules! print {
 #[macro_export]
 macro_rules! println {
     ($fmt: literal $(, $($arg: tt)+)?) => {
-        $crate::console::print(format_args!(concat!($fmt, "\n") $(, $($arg)+)?));
+      $crate::console::print(format_args!(concat!($fmt, "\n") $(, $($arg)+)?));
     }
 }
